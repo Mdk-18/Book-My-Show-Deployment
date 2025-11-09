@@ -7,8 +7,8 @@ pipeline {
     }
 
     environment {
-        DOCKER_IMAGE = 'darshan0011/bms:latest'
-        EKS_CLUSTER_NAME = 'bms-eks'
+        DOCKER_IMAGE = 'mdk18/bms:latest'
+        EKS_CLUSTER_NAME = 'bms--eks'
         AWS_REGION = 'us-east-1'
     }
 
@@ -45,10 +45,10 @@ pipeline {
         stage('Docker Build & Push') {
             steps {
                 script {
-                   withDockerRegistry(credentialsId: 'dockerhub-creds') {
+                   withDockerRegistry(credentialsId: 'DOCKER_HUB_PASWD') {
                         sh '''
-                        docker build -t darshan0011/bms:latest -f bookmyshow-app/Dockerfile bookmyshow-app
-                        docker push darshan0011/bms:latest
+                        docker build -t mdk18/bms:latest -f bookmyshow-app/Dockerfile bookmyshow-app
+                        docker push mdk18/bms:latest
                     '''
                         }
                 }
@@ -65,7 +65,7 @@ pipeline {
                 sh '''
                     echo "Verifying AWS credentials..."
                     aws sts get-caller-identity
-                    aws eks update-kubeconfig --name bms-eks --region us-east-1
+                    aws eks update-kubeconfig --name bms--eks --region us-east-1
                     kubectl apply -f deployment.yml
                     kubectl apply -f service.yml
                 '''
