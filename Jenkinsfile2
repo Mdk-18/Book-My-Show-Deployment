@@ -45,7 +45,7 @@ pipeline {
         stage('Docker Build & Push') {
             steps {
                 script {
-                   withDockerRegistry(credentialsId: 'DOCKER_HUB_PASWD') {
+                   withDockerRegistry(credentialsId: 'docker-cred') {
                         sh '''
                         docker build -t mdk18/bms:latest -f bookmyshow-app/Dockerfile bookmyshow-app
                         docker push mdk18/bms:latest
