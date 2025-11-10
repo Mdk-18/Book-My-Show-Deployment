@@ -65,7 +65,7 @@ pipeline {
                 sh '''
                     echo "Verifying AWS credentials..."
                     aws sts get-caller-identity
-                    aws eks update-kubeconfig --name bms--eks --region us-east-1
+                    aws eks update-kubeconfig --name bms-eks --region us-east-1
                     kubectl apply -f deployment.yml
                     kubectl apply -f service.yml
                 '''
